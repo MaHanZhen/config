@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+    <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
+</head>
+<body>
+    <form class="layui-form" style="padding-top: 15px" >
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name"  autocomplete="off" class="layui-input" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address"  autocomplete="off" class="layui-input" lay-verify="required">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">数据类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="dataType"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">采集频率</label>
+                <div class="layui-input-inline">
+                    <select name="rate">
+                        <option value=""></option>
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="15">15</option>
+                        <option value="60">60</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">hilo</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">计算方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="method"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">单位</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="unit"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">值类型</label>
+                <div class="layui-input-inline">
+                    <select name="valueType">
+                    <option value=""></option>
+                    <option value="Dword">Dword</option>
+                    <option value="Integer">Integer</option>
+                    <option value="word">word</option>
+                </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">值范围</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="valueRange"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否可以进行虚拟计算</label>
+            <div class="layui-input-block">
+               <input  type="checkbox" name="canvirtualCount" lay-skin="switch" lay-text="是|否">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+<script type="text/javascript" th:src="@{/js/meterchannel/update.js}"></script>
+</body>
+</html>
