@@ -29,8 +29,7 @@ public class MeterChannelService implements IMeterChannelService {
             List<Predicate> predicates = new ArrayList<>();
 
             if (!StringUtils.isEmpty(meterChannelParam.getKeyWord())) {
-                predicates.add(cb.like(root.get("name"), meterChannelParam.getKeyWord()));
-                predicates.add(cb.like(root.get("address"), meterChannelParam.getKeyWord()));
+                predicates.add(cb.or(cb.like(root.get("name"), "%"+meterChannelParam.getKeyWord()+"%"),cb.like(root.get("address"), "%"+meterChannelParam.getKeyWord()+"%")));
             }
 
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));

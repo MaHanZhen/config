@@ -15,10 +15,7 @@
 
     </div>
 
-
     <script type="text/html" id="toolbar">
-        <div class="layui-btn-container">
-
             <div class="layui-row">
                 <div class="layui-col-md9">
                     <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
@@ -28,21 +25,17 @@
                 <div class="layui-col-md3">
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <input type="text" name="keywork" style="height: 30px" required  placeholder="地址/名称" autocomplete="off" class="layui-input">
+                            <input type="text" id="keyWord" style="height: 30px" required  placeholder="地址/名称" autocomplete="off" class="layui-input">
                         </div>
                         <button class="layui-btn layui-btn-sm"  lay-event="search">搜索</button>
                     </div>
                 </div>
             </div>
 
-        </div>
-
 
     </script>
 
     <script type="text/javascript" th:src="@{/js/meterchannel/index.js}"></script>
 </div>
-
-<script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
 </body>
 </html>
