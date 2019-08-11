@@ -1,7 +1,7 @@
 server:
   port: 8280
   servlet:
-    context-path: /test
+    context-path: /cfg
 spring:
   profiles:
     active: my

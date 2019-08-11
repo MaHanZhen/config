@@ -5,9 +5,11 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
     <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
-
+    <script type="text/javascript" th:src="@{/js/module/js/jquery-1.12.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/public.js}"></script>
 </head>
 <body>
+    <input type="hidden" id="rootPath" th:href="@{/}">
     <input type="hidden" id="method" th:value="${method}">
     <form class="layui-form" style="padding-top: 15px" >
         <div class="layui-form-item">
@@ -50,7 +52,6 @@
                 <label class="layui-form-label">采集频率</label>
                 <div class="layui-input-inline">
                     <select name="rate">
-                        <option value=""></option>
                         <option value="1">1</option>
                         <option value="5">5</option>
                         <option value="15">15</option>

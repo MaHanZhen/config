@@ -1,15 +1,18 @@
 package com.mhz.history.config.domin;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "perce_meter_channel")
+@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class MeterChannel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "jpa-uuid")
     @Column(name = "ID")
     private String id;
 

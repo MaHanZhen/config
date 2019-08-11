@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.ListUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/MeterChannel")
@@ -44,14 +46,20 @@ public class MeterChannelController extends BaseController {
     @RequestMapping("/checkSaveData")
     @ResponseBody
     public Message checkSaveData(MeterChannel param){
-        return Message.success();
+        List<MeterChannel> result = this.meterChannelService.checkSaveData(param);
+
+        if(ListUtils.isEmpty(result)){
+            return Message.success();
+        }
+
+        return Message.error(result);
     }
 
     @RequestMapping("/save")
     @ResponseBody
     public Message save(MeterChannel param){
         MeterChannel save = this.meterChannelService.save(param);
-        return Message.success();
+        return Message.success(save);
     }
 
 }

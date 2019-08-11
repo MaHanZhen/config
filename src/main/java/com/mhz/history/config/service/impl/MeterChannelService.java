@@ -4,11 +4,14 @@ import com.mhz.history.config.dao.IMeterChannelDao;
 import com.mhz.history.config.domin.MeterChannel;
 import com.mhz.history.config.param.MeterChannelParam;
 import com.mhz.history.config.service.IMeterChannelService;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.util.ListUtils;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.Predicate;
@@ -27,12 +30,9 @@ public class MeterChannelService implements IMeterChannelService {
 
         Specification<MeterChannel> specification = (Specification<MeterChannel>) (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-
             if (!StringUtils.isEmpty(meterChannelParam.getKeyWord())) {
-                predicates.add(cb.like(root.get("name"), meterChannelParam.getKeyWord()));
-                predicates.add(cb.like(root.get("address"), meterChannelParam.getKeyWord()));
+                predicates.add(cb.or(cb.like(root.get("name"), meterChannelParam.getKeyWord()),cb.like(root.get("address"), meterChannelParam.getKeyWord())));
             }
-
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         };
 
@@ -44,4 +44,10 @@ public class MeterChannelService implements IMeterChannelService {
     public MeterChannel save(MeterChannel meterChannel) {
         return this.meterChannelDao.save(meterChannel);
     }
+
+    @Override
+    public List<MeterChannel> checkSaveData(MeterChannel param) {
+        return  meterChannelDao.findCheckData(param.getName(),param.getAddress());
+    }
+
 }

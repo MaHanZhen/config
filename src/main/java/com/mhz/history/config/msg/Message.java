@@ -4,7 +4,8 @@ public class Message {
 
     private Integer code;
 
-    private String message;
+    private Object content;
+
 
     public Message(){}
 
@@ -16,21 +17,29 @@ public class Message {
         return new Message(200);
     }
 
-    public static Message success(String message){
-        return new Message(200,message);
+    public static Message success(Object content){
+        return new Message(200,content);
     }
 
     public static Message error(){
         return new Message(400);
     }
 
-    public static Message error(String message){
-        return new Message(400,message);
+    public static Message error(Object content){
+        return new Message(400,content);
     }
 
-    public Message (Integer code,String message){
+    public Message (Integer code,Object content){
         this.code = code;
-        this.message = message;
+        this.content = content;
+    }
+
+    public Object getContent() {
+        return content;
+    }
+
+    public void setContent(Object content) {
+        this.content = content;
     }
 
     public Integer getCode() {
@@ -41,11 +50,4 @@ public class Message {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

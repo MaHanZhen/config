@@ -6,9 +6,12 @@
 
     <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
     <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/js/jquery-1.12.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/public.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
+    <input type="hidden" id="rootPath" th:href="@{/}">
     <div th:insert="layout/header :: header"></div>
     <div th:insert="layout/left :: left"></div>
     <div layout:fragment="content" > content</div>
