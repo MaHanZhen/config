@@ -9,4 +9,6 @@ public interface IMeterChannelService {
 
 
     Page<MeterChannel> listMeterChannel(MeterChannelParam meterChannelParam, Pageable pageable);
+
+    MeterChannel save(MeterChannel meterChannel);
 }

@@ -39,4 +39,9 @@ public class MeterChannelService implements IMeterChannelService {
         Page<MeterChannel> channels = meterChannelDao.findAll(specification, pageable);
         return channels;
     }
+
+    @Override
+    public MeterChannel save(MeterChannel meterChannel) {
+        return this.meterChannelDao.save(meterChannel);
+    }
 }
