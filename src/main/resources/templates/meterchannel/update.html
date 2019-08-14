@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
-
+    <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/js/jquery-1.12.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/public.js}"></script>
 </head>
 <body>
-    <form class="layui-form" style="padding-top: 15px" >
+    <input type="hidden" id="rootPath" th:href="@{/}">
+    <input type="hidden" id="method" th:value="${method}">
+    <form class="layui-form" lay-filter="meterForm" style="padding-top: 15px" >
+        <input type="hidden" id="id" name="id" th:value="${id}">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">名称</label>
@@ -48,18 +53,17 @@
                 <label class="layui-form-label">采集频率</label>
                 <div class="layui-input-inline">
                     <select name="rate">
-                        <option value=""></option>
-                        <option value="1">1</option>
-                        <option value="5">5</option>
-                        <option value="15">15</option>
-                        <option value="60">60</option>
+                        <option value="1">1分钟</option>
+                        <option value="5">5分钟</option>
+                        <option value="15">15分钟</option>
+                        <option value="60">60分钟</option>
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">hilo</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="email"  autocomplete="off" class="layui-input">
+                    <input type="text" name="hilo"  autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -110,13 +114,11 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </form>
-    <script type="text/javascript" th:src="@{/js/module/jquery/jquery-1.12.4.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
-    <script type="text/javascript" th:src="@{/js/meterchannel/update.js}"></script>
+<script type="text/javascript" th:src="@{/js/meterchannel/update.js}"></script>
 </body>
 </html>

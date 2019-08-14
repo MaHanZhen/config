@@ -44,16 +44,66 @@ function loadMeterTable(){
                     toAdd();
                     break;
                 case 'delete':
-                    var data = checkStatus.data;
+                    disable();
                     break;
                 case 'change':
+                    toChange();
                     break;
                 case 'search':
                     search();
                     break;
             }
         });
+        
+        meterTable.on('checkbox(meterTable)',function (obj) {
+            changeTableToolbar();
+        })
     });
+}
+
+function disable() {
+
+    layer.confirm('确认删除信道？', {
+        btn: ['是','否'] //按钮
+    }, function(){
+        postDisableData();
+    }, function(){});
+
+
+
+}
+
+function postDisableData() {
+    var checkStatus = meterTable.checkStatus('meterTable');
+    var ids = "";
+    checkStatus.data.forEach(function (meter) {
+        ids+=meter.id+",";
+    });
+
+    $.ajax({
+        url:"disable",
+        type:"post",
+        data:{ids:ids},
+        success:function (result) {
+            layer.msg("删除成功");
+            meterTable.reload("meterTable");
+        }
+    })
+}
+
+function changeTableToolbar() {
+    var checkStatus = meterTable.checkStatus('meterTable');
+    var length = checkStatus.data.length;
+    if(length == 0){
+        $("#option button[lay-event='delete']").addClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
+    }else if (length == 1){
+        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").removeClass("layui-btn-disabled");
+    }else if(length >1){
+        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
+    }
 }
 
 
@@ -63,6 +113,19 @@ function search() {
     meterTableOptions.where.keyWord = keyWord;
     loadMeterTable(meterTableOptions);
 }
+
+
+function toChange() {
+    var checkStatus = meterTable.checkStatus('meterTable');
+    var id = checkStatus.data[0].id;
+    layer.open({
+        type: 2,
+        area: ['700px', '450px'],
+        shadeClose: true,
+        content:'toEdit?id='+id
+    });
+}
+
 
 function toAdd() {
     layer.open({

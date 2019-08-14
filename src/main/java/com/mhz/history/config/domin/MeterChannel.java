@@ -1,15 +1,21 @@
 package com.mhz.history.config.domin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "perce_meter_channel")
-public class MeterChannel {
+@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+public class MeterChannel implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "jpa-uuid")
     @Column(name = "ID")
     private String id;
 

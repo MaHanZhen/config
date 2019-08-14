@@ -2,7 +2,7 @@ package com.mhz.history.config.service.impl;
 
 import com.mhz.history.config.dao.IMeterChannelDao;
 import com.mhz.history.config.domin.MeterChannel;
-import com.mhz.history.config.param.MeterChannelParam;
+import com.mhz.history.config.vo.MeterChannelVO;
 import com.mhz.history.config.service.IMeterChannelService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,13 +23,15 @@ public class MeterChannelService implements IMeterChannelService {
 
 
     @Override
-    public Page<MeterChannel> listMeterChannel(final MeterChannelParam meterChannelParam, Pageable pageable) {
+    public Page<MeterChannel> listMeterChannel(final MeterChannelVO meterChannelVO, Pageable pageable) {
 
         Specification<MeterChannel> specification = (Specification<MeterChannel>) (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!StringUtils.isEmpty(meterChannelParam.getKeyWord())) {
-                predicates.add(cb.or(cb.like(root.get("name"), "%"+meterChannelParam.getKeyWord()+"%"),cb.like(root.get("address"), "%"+meterChannelParam.getKeyWord()+"%")));
+            predicates.add(cb.isTrue(root.get("enabled")));
+
+            if (!StringUtils.isEmpty(meterChannelVO.getKeyWord())) {
+                predicates.add(cb.or(cb.like(root.get("name"), "%"+ meterChannelVO.getKeyWord()+"%"),cb.like(root.get("address"), "%"+ meterChannelVO.getKeyWord()+"%")));
             }
 
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -37,5 +39,29 @@ public class MeterChannelService implements IMeterChannelService {
 
         Page<MeterChannel> channels = meterChannelDao.findAll(specification, pageable);
         return channels;
+    }
+
+    @Override
+    public MeterChannel save(MeterChannel meterChannel) {
+        meterChannel.setEnabled(true);
+        return this.meterChannelDao.save(meterChannel);
+    }
+
+    @Override
+    public List<MeterChannel> checkSaveData(MeterChannel param) {
+        return  meterChannelDao.findCheckData(param.getName(),param.getAddress());
+    }
+
+
+    @Override
+    public MeterChannel getMeterChannel(String id) {
+        return meterChannelDao.getOne(id);
+    }
+
+    @Override
+    public void disable(String ...ids) {
+        for (String id : ids) {
+            this.meterChannelDao.disable(id);
+        }
     }
 }

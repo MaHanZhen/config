@@ -1,8 +1,8 @@
-package com.mhz.history.config.param;
+package com.mhz.history.config.vo;
 
 import com.mhz.history.config.domin.MeterChannel;
 
-public class MeterChannelParam extends MeterChannel {
+public class MeterChannelVO extends MeterChannel {
 
     public String keyWord;
 
