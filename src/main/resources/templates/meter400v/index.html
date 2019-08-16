@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-body" layout:fragment="content">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md5">
+                <div class="layui-card">
+                    <div class="layui-card-header">监测表管理</div>
+                    <div class="layui-card-body">
+                        <table id="meterTable" class="layui-hide" lay-filter="meterTable"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md7 ">
+                <div class="layui-card">
+                    <div class="layui-card-header">监测表转换公式管理</div>
+                    <div class="layui-card-body">
+                        <table id="collTable" class="layui-hide" lay-filter="collTable"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/html" id="meterToolbar">
+        <div id="option" class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加·</button>
+            <button class="layui-btn layui-btn-sm layui-btn-disabled" lay-event="delete">删除</button>
+            <button class="layui-btn layui-btn-sm layui-btn-disabled" lay-event="change">修改</button>
+        </div>
+    </script>
+
+    <script type="text/javascript" th:src="@{/js/meter400v/index.js}"></script>
+</div>
+</body>
+</html>

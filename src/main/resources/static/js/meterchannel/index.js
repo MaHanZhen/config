@@ -56,7 +56,7 @@ function loadMeterTable(){
         });
         
         meterTable.on('checkbox(meterTable)',function (obj) {
-            changeTableToolbar();
+            changeTableToolbar(meterTable);
         })
     });
 }
@@ -91,20 +91,7 @@ function postDisableData() {
     })
 }
 
-function changeTableToolbar() {
-    var checkStatus = meterTable.checkStatus('meterTable');
-    var length = checkStatus.data.length;
-    if(length == 0){
-        $("#option button[lay-event='delete']").addClass("layui-btn-disabled");
-        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
-    }else if (length == 1){
-        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
-        $("#option button[lay-event='change']").removeClass("layui-btn-disabled");
-    }else if(length >1){
-        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
-        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
-    }
-}
+
 
 
 
@@ -134,5 +121,4 @@ function toAdd() {
         shadeClose: true,
         content: 'toNew'
     });
-
 }

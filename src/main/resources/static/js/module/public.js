@@ -28,3 +28,31 @@ function isEmpty(obj){
 function isNotEmpty(obj) {
     return !isEmpty(obj);
 }
+
+
+function clearArray(arr) {
+    var postData={};
+
+    $.each(arr,function (key,value) {
+        if(isNotEmpty(value)){
+            postData[key] = value;
+        }
+    });
+    return postData;
+}
+
+
+function changeTableToolbar(table) {
+    var checkStatus = table.checkStatus('meterTable');
+    var length = checkStatus.data.length;
+    if(length == 0){
+        $("#option button[lay-event='delete']").addClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
+    }else if (length == 1){
+        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").removeClass("layui-btn-disabled");
+    }else if(length >1){
+        $("#option button[lay-event='delete']").removeClass("layui-btn-disabled");
+        $("#option button[lay-event='change']").addClass("layui-btn-disabled");
+    }
+}

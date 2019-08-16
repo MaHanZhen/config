@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+    <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/js/jquery-1.12.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/public.js}"></script>
+</head>
+<body>
+    <input type="hidden" id="rootPath" th:href="@{/}">
+    <input type="hidden" id="method" th:value="${method}">
+    <form class="layui-form" lay-filter="meterForm" style="padding-top: 15px" >
+        <input type="hidden" id="id" name="id" th:value="${id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="modelName"  autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="model"  autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">生产厂家</label>
+            <div class="layui-input-block">
+                <input type="text" name="manufacturer"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">额定电流</label>
+            <div class="layui-input-block">
+                <input type="text" name="ratedElectricity"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">额定电压</label>
+            <div class="layui-input-block">
+                <input type="text" name="ratedVolt"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+<script type="text/javascript" th:src="@{/js/meter400v/update.js}"></script>
+</body>
+</html>
