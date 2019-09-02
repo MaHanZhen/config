@@ -42,6 +42,24 @@ function clearArray(arr) {
 }
 
 
+function postDisableData(table,status,url) {
+    var checkStatus = table.checkStatus(status);
+    var ids = "";
+    checkStatus.data.forEach(function (meter) {
+        ids+=meter.id+",";
+    });
+
+    $.ajax({
+        url:url,
+        type:"post",
+        data:{ids:ids},
+        success:function (result) {
+            layer.msg("删除成功");
+            table.reload(status);
+        }
+    })
+}
+
 function changeTableToolbar(table) {
     var checkStatus = table.checkStatus('meterTable');
     var length = checkStatus.data.length;

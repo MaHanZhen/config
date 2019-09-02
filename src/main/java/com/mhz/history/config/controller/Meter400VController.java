@@ -47,18 +47,25 @@ public class Meter400VController extends BaseController {
         return Message.success(meter400V);
     }
 
-    @RequestMapping("/toChange")
-    public String toChange(String id,Model model){
-        model.addAttribute("method","save");
+    @RequestMapping("/toEdit")
+    public String toEdit (String id,Model model){
+        model.addAttribute("method","update");
         model.addAttribute("id",id);
         return "meter400v/update";
     }
 
-    @RequestMapping
+    @RequestMapping("/getMeter400V")
     @ResponseBody
     public Message getMeter400V(String id){
         Meter400V meter400V = this.meter400VService.getMeter400V(id);
         return Message.success(meter400V);
+    }
+
+    @RequestMapping("disable")
+    @ResponseBody
+    public Message disable(String ids){
+        this.meter400VService.disable(ids.split(","));
+        return Message.success();
     }
 
 }

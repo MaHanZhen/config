@@ -62,34 +62,14 @@ function loadMeterTable(){
 }
 
 function disable() {
-
     layer.confirm('确认删除信道？', {
         btn: ['是','否'] //按钮
     }, function(){
-        postDisableData();
+        postDisableData(meterTable,'meterTable',"disable");
     }, function(){});
-
-
-
 }
 
-function postDisableData() {
-    var checkStatus = meterTable.checkStatus('meterTable');
-    var ids = "";
-    checkStatus.data.forEach(function (meter) {
-        ids+=meter.id+",";
-    });
 
-    $.ajax({
-        url:"disable",
-        type:"post",
-        data:{ids:ids},
-        success:function (result) {
-            layer.msg("删除成功");
-            meterTable.reload("meterTable");
-        }
-    })
-}
 
 
 

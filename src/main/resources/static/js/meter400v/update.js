@@ -1,3 +1,30 @@
+var method = $("#method").val();
+$(function () {
+    initForm();
+});
+
+function initForm(){
+    if("update" != method){
+        return;
+    }
+
+    var id = $("#id").val();
+    $.ajax({
+        url:BaseParam.rootPath+"Meter400V/getMeter400V",
+        data:{id:id},
+        type:"post",
+        success:function (result) {
+            layui.use('form',function () {
+                var form = layui.form;
+                form.val('meterForm',result.content);
+            })
+
+        }
+    })
+
+}
+
+
 layui.use('form', function(){
     var form = layui.form;
     //监听提交

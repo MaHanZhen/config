@@ -73,12 +73,6 @@ function saveData(data) {
 function postSaveData(data) {
     var postData=clearArray(data.field);
 
-    // $.each(data.field,function (key,value) {
-    //     if(isNotEmpty(value)){
-    //         postData[key] = value;
-    //     }
-    // });
-
     var msg = "save" == method?"添加成功":"修改成功";
 
     var url = BaseParam.rootPath+"MeterChannel/save";

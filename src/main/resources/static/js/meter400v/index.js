@@ -11,8 +11,9 @@ function initTable() {
 
 function initMeterTable() {
     layui.use('table', function(){
-        var meterTable = layui.table;
+        meterTable = layui.table;
         meterTable.render({
+            id:'meterTable',
             elem: '#meterTable',
             url:'listMeter400V',
             toolbar:'#meterToolbar',
@@ -34,12 +35,13 @@ function initMeterTable() {
             var checkStatus = meterTable.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
-                    toAdd();
+                    toAddMeter();
                     break;
                 case 'change':
-                    var data = checkStatus.data;
+                    toChangeMeter();
                     break;
                 case 'delete':
+                    disableMeter();
                     break;
             };
         });
@@ -54,11 +56,31 @@ function initCollTable() {
 
 }
 
-function toAdd() {
+
+function disableMeter() {
+    layer.confirm('确认删除监测表？', {
+        btn: ['是','否'] //按钮
+    }, function(){
+        postDisableData(meterTable,'meterTable',"disable");
+    }, function(){});
+}
+
+function toAddMeter() {
     layer.open({
         type: 2,
         area: ['600px', '400px'],
         shadeClose: true,
         content: 'toNew'
+    });
+}
+
+function toChangeMeter() {
+    var checkStatus = meterTable.checkStatus('meterTable');
+    var id = checkStatus.data[0].id;
+    layer.open({
+        type: 2,
+        area: ['600px', '400px'],
+        shadeClose: true,
+        content:'toEdit?id='+id
     });
 }

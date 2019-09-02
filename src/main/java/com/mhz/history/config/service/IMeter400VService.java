@@ -11,4 +11,6 @@ public interface IMeter400VService {
     Meter400V save(Meter400V param);
 
     Meter400V getMeter400V(String id);
+
+    void disable(String... ids);
 }

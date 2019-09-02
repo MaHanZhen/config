@@ -42,4 +42,11 @@ public class Meter400VService implements IMeter400VService {
     public Meter400V getMeter400V(String id) {
         return this.meter400VDao.getOne(id);
     }
+
+    @Override
+    public void disable(String... ids) {
+        for (String id : ids) {
+            this.meter400VDao.disable(id);
+        }
+    }
 }
