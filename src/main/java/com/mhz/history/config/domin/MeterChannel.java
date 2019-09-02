@@ -19,44 +19,44 @@ public class MeterChannel implements Serializable {
     @Column(name = "ID")
     private String id;
 
-    /*
+    /**
      * 名称
      */
     @Column(name = "NAME")
     private String name;
 
-    /*
+    /**
      * 地址
      */
     @Column(name = "ADDRESS")
     private String address;
 
-    /*
+    /**
      * 类型
      */
     @Column(name = "TYPE")
     private String type;
 
-    /*
+    /**
      * 数据长度
      */
     @Column(name = "DATALENGHT")
     private BigDecimal dataLenght;
 
-    /*
+    /**
      * 数据类型
      */
     @Column(name = "DATATYPE")
     private String dataType;
 
 
-    /*
+    /**
      * 采集频率
      */
     @Column(name = "RATE")
     private BigDecimal rate;
 
-    /*
+    /**
      * 计算方式
      */
     @Column(name = "METHOD")
@@ -65,19 +65,19 @@ public class MeterChannel implements Serializable {
     @Column(name = "ACC")
     private String acc;
 
-    /*
+    /**
      * 单位
      */
     @Column(name = "UNIT")
     private String unit;
 
-    /*
+    /**
      * 值类型
      */
     @Column(name = "VALUETYPE")
     private String valueType;
 
-    /*
+    /**
      * 值范围
      */
     @Column(name = "VALUERANGE")
