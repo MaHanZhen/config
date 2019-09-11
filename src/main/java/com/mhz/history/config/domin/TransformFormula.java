@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "coll_transform_formula")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class TransformFormula implements Serializable {
 
     @Id
@@ -17,24 +17,23 @@ public class TransformFormula implements Serializable {
     @Column(name = "ID")
     private String id;
 
+    @JoinColumn(name = "DTU_MODEL")
+    @ManyToOne
+    private Dtu400V dtu400V;
 
-    /**
-     * DTU型号ID
-     */
-    @Column(name = "DTU_MODEL")
-    private String dtuModel;
 
-    /**
-     * 监测表型号ID
-     */
-    @Column(name = "METER_MODEL")
-    private String meterModel;
+    @JoinColumn(name = "METER_MODEL")
+    @ManyToOne
+    private Meter400V meter400V;
+
 
     /**
      * 监测项ID
      */
-    @Column(name = "MONITOR_ITEM_ID")
-    private String monitorItemId;
+
+    @JoinColumn(name = "MONITOR_ITEM_ID")
+    @ManyToOne
+    private MeterChannel meterChannel;
 
     /**
      * 实时数据监测项标识
@@ -57,28 +56,28 @@ public class TransformFormula implements Serializable {
         this.id = id;
     }
 
-    public String getDtuModel() {
-        return dtuModel;
+    public Dtu400V getDtu400V() {
+        return dtu400V;
     }
 
-    public void setDtuModel(String dtuModel) {
-        this.dtuModel = dtuModel;
+    public void setDtu400V(Dtu400V dtu400V) {
+        this.dtu400V = dtu400V;
     }
 
-    public String getMeterModel() {
-        return meterModel;
+    public Meter400V getMeter400V() {
+        return meter400V;
     }
 
-    public void setMeterModel(String meterModel) {
-        this.meterModel = meterModel;
+    public void setMeter400V(Meter400V meter400V) {
+        this.meter400V = meter400V;
     }
 
-    public String getMonitorItemId() {
-        return monitorItemId;
+    public MeterChannel getMeterChannel() {
+        return meterChannel;
     }
 
-    public void setMonitorItemId(String monitorItemId) {
-        this.monitorItemId = monitorItemId;
+    public void setMeterChannel(MeterChannel meterChannel) {
+        this.meterChannel = meterChannel;
     }
 
     public String getRealTimeMonitorItemMarker() {
@@ -101,9 +100,9 @@ public class TransformFormula implements Serializable {
     public String toString() {
         return "TransformFormula{" +
                 "id='" + id + '\'' +
-                ", dtuModel='" + dtuModel + '\'' +
-                ", meterModel='" + meterModel + '\'' +
-                ", monitorItemId='" + monitorItemId + '\'' +
+                ", dtu400V=" + dtu400V +
+                ", meter400V=" + meter400V +
+                ", meterChannel=" + meterChannel +
                 ", realTimeMonitorItemMarker='" + realTimeMonitorItemMarker + '\'' +
                 ", transformFormula='" + transformFormula + '\'' +
                 '}';

@@ -43,12 +43,18 @@ function initMeterTable() {
                 case 'delete':
                     disableMeter();
                     break;
-            };
+            }
         });
 
         meterTable.on('checkbox(meterTable)',function (obj) {
             changeTableToolbar(meterTable);
         })
+
+        //监听行单击事件（单击事件为：rowDouble）
+        meterTable.on('row(meterTable)', function(obj){
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
     });
 }
 
