@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.support.JpaRepositoryImplementati
 
 public interface ITransformFormulaDao extends JpaRepositoryImplementation<TransformFormula,String> {
 
-    @Query("FROM TransformFormula where meter400V.id = :meterId ")
-    Page<TransformFormula> listTransformFormula(String meterId, Pageable pageRequest);
+
 }

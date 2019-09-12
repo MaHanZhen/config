@@ -1,8 +1,8 @@
 package com.mhz.history.config.controller;
 
-import com.mhz.history.config.domin.TransformFormula;
 import com.mhz.history.config.service.ITransformFormulaService;
 import com.mhz.history.config.util.LayUiUtil;
+import com.mhz.history.config.vo.TransformFormulaVO;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class TransformFormulaController extends BaseController {
     @RequestMapping("/listTransformFormula")
     @ResponseBody
     public Object listTransformFormula(String meterId){
-        Page<TransformFormula> result = this.transformFormulaService.listTransformFormula(meterId,this.getPageRequest());
+        Page<TransformFormulaVO> result = this.transformFormulaService.listTransformFormula(meterId,this.getPageRequest());
         return LayUiUtil.transformLayUiTableData(result);
     }
 

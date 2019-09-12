@@ -6,7 +6,7 @@ $(function () {
 
 function initBaseParam() {
     BaseParam = {
-        rootPath:$("#rootPath").attr("href"),
+        rootPath:"/cfg",
         success:200,
         error:400
     };

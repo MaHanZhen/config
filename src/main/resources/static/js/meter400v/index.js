@@ -1,12 +1,11 @@
 var meterTable,collTable;
-
+var nowMeterId;
 $(function () {
    initTable();
 });
 
 function initTable() {
     initMeterTable();
-    initCollTable()
 }
 
 function initMeterTable() {
@@ -30,6 +29,12 @@ function initMeterTable() {
                 {field:'ratedVolt',  title: '额定电压'},
             ]],
             page:true,
+            done: function(res, curr, count){
+                if(count == 0){
+                    return;
+                }
+                $("div[lay-id='meterTable'] tr[data-index='0']").click();
+            }
         });
         meterTable.on('toolbar(meterTable)', function(obj){
             var checkStatus = meterTable.checkStatus(obj.config.id);
@@ -48,18 +53,61 @@ function initMeterTable() {
 
         meterTable.on('checkbox(meterTable)',function (obj) {
             changeTableToolbar(meterTable);
-        })
+        });
 
         //监听行单击事件（单击事件为：rowDouble）
         meterTable.on('row(meterTable)', function(obj){
             //标注选中样式
             obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            loadCollTable(obj.data.id)
         });
     });
 }
 
-function initCollTable() {
+function loadCollTable(meterId) {
 
+    layui.use('table', function(){
+        collTable = layui.table;
+        collTable.render({
+            id:'collTable',
+            elem: '#collTable',
+            url:BaseParam.rootPath+'/TransformFormula/listTransformFormula',
+            toolbar:'#meterToolbar',
+            method:"post",
+            where:{meterId:meterId},
+            limit:20,
+            page: {curr: 1},
+            cols: [[
+                {type: 'checkbox'},
+                {field:'dtuName', width:150,  title: 'DTU型号'},
+                {field:'channelAddress',width:150,  title: '监测项地址'},
+                {field:'channelName',  title: '监测项名称'},
+                {field:'rate',  title: '监测频率'},
+                {field:'realTimeMonitorItemMarker',  title: '监测项标识'},
+                {field:'transformFormula',  title: '转换公式'},
+            ]],
+            page:true,
+        });
+        collTable.on('toolbar(collTable)', function(obj){
+            var checkStatus = meterTable.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    toAddMeter();
+                    break;
+                case 'change':
+                    toChangeMeter();
+                    break;
+                case 'delete':
+                    disableMeter();
+                    break;
+            }
+        });
+
+        collTable.on('checkbox(collTable)',function (obj) {
+            changeTableToolbar(meterTable);
+        });
+
+    });
 }
 
 
