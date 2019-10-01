@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-body" layout:fragment="content">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">监测表型号</div>
+                    <div class="layui-card-body">
+                        <table id="meterTable" class="layui-hide" lay-filter="meterTable"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">历史数据分类</div>
+                    <div class="layui-card-body">
+                        <div id="cfgTree"  ></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md6 ">
+                <div class="layui-card">
+                    <div class="layui-card-header">历史数据节点</div>
+                    <div class="layui-card-body">
+                        <table id="cfgTable" class="layui-hide" lay-filter="collTable"></table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" th:src="@{/js/factordatagroupcfg/index.js}"></script>
+</div>
+</body>
+</html>

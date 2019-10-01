@@ -4,7 +4,7 @@ server:
     context-path: /cfg
 spring:
   profiles:
-    active: com
+    active: mhz
 
 
 
