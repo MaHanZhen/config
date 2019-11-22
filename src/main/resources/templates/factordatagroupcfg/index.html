@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/js/module/layui_ext/dtree/dtree.css}">
+    <link rel="stylesheet" th:href="@{/js/module/layui_ext/dtree/font/dtreefont.css}">
 </head>
 <body class="layui-layout-body">
 
@@ -11,29 +13,37 @@
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
         <div class="layui-row layui-col-space10">
-            <div class="layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">监测表型号</div>
-                    <div class="layui-card-body">
-                        <table id="meterTable" class="layui-hide" lay-filter="meterTable"></table>
-                    </div>
-                </div>
-            </div>
 
             <div class="layui-col-md3">
                 <div class="layui-card">
                     <div class="layui-card-header">历史数据分类</div>
                     <div class="layui-card-body">
-                        <div id="cfgTree"  ></div>
+
+                        <div style="margin-bottom: 20px">
+                        <button class="layui-btn layui-btn-sm " dtree-id="cfgTree" dtree-menu="add">添加</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" dtree-id="cfgTree" dtree-menu="change">修改</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" dtree-id="cfgTree" dtree-menu="delete">删除</button>
+
+                        <button class="layui-btn layui-btn-sm layui-btn-normal" dtree-id="cfgTree" dtree-menu="moveDown">展开全部节点</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-normal" dtree-id="cfgTree" dtree-menu="moveUp">收缩全部节点</button>
+                        </div>
+                        <ul id="cfgTree" class="dtree" data-id="-1"></ul>
                     </div>
                 </div>
             </div>
 
-            <div class="layui-col-md6 ">
+            <div class="layui-col-md9">
                 <div class="layui-card">
                     <div class="layui-card-header">历史数据节点</div>
                     <div class="layui-card-body">
                         <table id="cfgTable" class="layui-hide" lay-filter="collTable"></table>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">节点详情</div>
+                    <div class="layui-card-body">
+                        <form></form>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-package com.mhz.history.config.service;
+package com.mhz.history.config.dao;
 
 import com.mhz.history.config.domin.FactorDataGroupCfg;
 import com.mhz.history.config.vo.FactorDataGroupCfgVO;
@@ -8,11 +8,12 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface IFactorDataGroupCfgService {
-
+public interface IFactorDataGroupCfNativeSqlDao {
     List<LayUiDTreeNode> listAllTreeNode();
 
     Page<FactorDataGroupCfgVO> findCfgPoint(String parentId, Pageable pageRequest);
 
-    FactorDataGroupCfg addTreeNode(String parentId, String name);
+    String generateId();
+
+    String generateLayerOrder(String baseLayerOrder,Integer index);
 }

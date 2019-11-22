@@ -12,20 +12,19 @@ import javax.persistence.*;
 public class FactorDataGroupCfg {
 
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
     @Column(name = "ID")
     private String id;
 
     /**
      * 名称
      */
-    @Column(name = "NAME")
+    @Column(name = "[NAME]")
     private String name;
 
     /**
      *
      */
-    @Column(name = "KEY")
+    @Column(name = "[KEY]")
     private String key;
 
     /**

@@ -1,11 +1,22 @@
 package com.mhz.history.config.controller;
 
+import com.mhz.history.config.domin.FactorDataGroupCfg;
 import com.mhz.history.config.service.IFactorDataGroupCfgService;
+import com.mhz.history.config.util.LayUiUtil;
+import com.mhz.history.config.vo.FactorDataGroupCfgVO;
+import com.mhz.history.config.vo.LayUiDTreeNode;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Controller
 @RequestMapping("/FactorDataGroupCfg")
@@ -20,9 +31,28 @@ public class FactorDataGroupCfgController  extends BaseController {
         return "factordatagroupcfg/index";
     }
 
-    @RequestMapping("cfgTree")
+
+    @RequestMapping("/cfgTree")
     @ResponseBody
-    public Object cfgTree(String meterId){
-        return  factorDataGroupCfgService.cfgTree(meterId);
+    public Object cfgTree(String parentId){
+        List<LayUiDTreeNode> treeNodes = this.factorDataGroupCfgService.listAllTreeNode();
+        return LayUiUtil.transformLayUiDTreeData(treeNodes);
+    }
+
+    @RequestMapping("/addTreeNode")
+    @ResponseBody
+    public Object addTreeNode(String name, String parentId){
+        if(StringUtils.isEmpty(name)){
+            return new FactorDataGroupCfg();
+        }
+        FactorDataGroupCfg factorDataGroupCfg = this.factorDataGroupCfgService.addTreeNode(parentId,name);
+        return factorDataGroupCfg;
+    }
+
+    @RequestMapping("/cfgPoint")
+    @ResponseBody
+    public Object cfgPoint(String parentId){
+        Page<FactorDataGroupCfgVO> data = this.factorDataGroupCfgService.findCfgPoint(parentId,getPageRequest());
+        return LayUiUtil.transformLayUiTableData(data);
     }
 }

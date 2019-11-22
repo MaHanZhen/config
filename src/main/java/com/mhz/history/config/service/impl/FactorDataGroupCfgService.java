@@ -1,14 +1,23 @@
 package com.mhz.history.config.service.impl;
 
+import com.mhz.history.config.dao.IFactorDataGroupCfNativeSqlDao;
 import com.mhz.history.config.dao.IFactorDataGroupCfgDao;
 import com.mhz.history.config.dao.ITransformFormulaNativeSqlDao;
 import com.mhz.history.config.domin.FactorDataGroupCfg;
+import com.mhz.history.config.domin.Meter400V;
 import com.mhz.history.config.service.IFactorDataGroupCfgService;
+import com.mhz.history.config.vo.FactorDataGroupCfgVO;
+import com.mhz.history.config.vo.LayUiDTreeNode;
+import jdk.internal.util.xml.impl.Input;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.persistence.ManyToOne;
+import javax.persistence.criteria.Predicate;
 import java.util.*;
 
 @Service
@@ -20,42 +29,69 @@ public class FactorDataGroupCfgService implements IFactorDataGroupCfgService {
     @Resource
     IFactorDataGroupCfgDao factorDataGroupCfgDao;
 
+    @Resource
+    IFactorDataGroupCfNativeSqlDao factorDataGroupCfNativeSqlDao;
+
     @Override
-    public Object cfgTree(String meterId) {
-        List<Map<String, Object>> maps = transformFormulaNativeSqlDao.listTransformFormula(meterId);
-
-        //获取所有信道分类上级
-        Map<String, FactorDataGroupCfg> parents = new HashMap<>();
-        maps.forEach(map -> getFactorParent(parents, map.get("ID").toString()));
-
-        //把信道转为树节点
-        return getFactorParentGroup(parents);
+    public List<LayUiDTreeNode> listAllTreeNode() {
+        return factorDataGroupCfNativeSqlDao.listAllTreeNode();
     }
 
-    private Map<String, List<FactorDataGroupCfg>> getFactorParentGroup(Map<String, FactorDataGroupCfg> parents) {
-        Map<String, List<FactorDataGroupCfg>> result = new HashMap<>();
-
-        parents.forEach((k, cfg) -> {
-            String parentId = Optional.ofNullable(cfg.getParentId()).orElse("-1");
-            List<FactorDataGroupCfg> cfgs = Optional.ofNullable(result.get(parentId)).orElse(new ArrayList<>());
-            cfgs.add(cfg);
-            result.put(parentId, cfgs);
-        });
-
-        return result;
+    @Override
+    public Page<FactorDataGroupCfgVO> findCfgPoint(String parentId, Pageable pageRequest) {
+        return this.factorDataGroupCfNativeSqlDao.findCfgPoint(parentId,  pageRequest);
     }
 
-    private void getFactorParent(Map<String, FactorDataGroupCfg> parents, String id) {
+    @Override
+    public synchronized FactorDataGroupCfg addTreeNode(String parentId, String name) {
+        String id = factorDataGroupCfNativeSqlDao.generateId();
+        String layerOrder= generateLayerOrder(parentId);
 
-        Optional<FactorDataGroupCfg> optional = Optional.ofNullable(parents.get(id));
+        FactorDataGroupCfg factorDataGroupCfg = new FactorDataGroupCfg();
+        factorDataGroupCfg.setId(id);
+        factorDataGroupCfg.setLayerOrder(layerOrder);
 
-        if (!optional.isPresent() && !StringUtils.isEmpty(id)) {
-            optional = factorDataGroupCfgDao.findById(id);
+        factorDataGroupCfg.setKey(id);
+        factorDataGroupCfg.setFullKey(getFullKey(parentId,id));
+        factorDataGroupCfg.setName(name);
+        factorDataGroupCfg.setEnabled(true);
+        factorDataGroupCfg.setParentId(parentId);
+        factorDataGroupCfg.setDataName(name);
+        factorDataGroupCfg.setUiControl("checkbox");
+        factorDataGroupCfg.setFactorId(null);
+
+        return factorDataGroupCfgDao.save(factorDataGroupCfg);
+    }
+
+
+    private String generateLayerOrder(String parentId){
+        if(StringUtils.isEmpty(parentId)){
+            parentId = "-1";
+        }
+        Optional<FactorDataGroupCfg> groupCfg = factorDataGroupCfgDao.findById(parentId);
+        String parentLayerOrder = groupCfg.map(FactorDataGroupCfg::getLayerOrder).orElse("");
+        Integer index = parentLayerOrder.length()+1;
+
+        String layerOrder = this.factorDataGroupCfNativeSqlDao.generateLayerOrder(parentLayerOrder,index);
+        if(layerOrder.length()<4){
+           String zero = "";
+           for (int i = 0;i<4-layerOrder.length();i++){
+               zero+="0";
+           }
+           layerOrder = zero + layerOrder;
         }
 
-        if (optional.isPresent() && optional.get().getEnabled()) {
-            parents.put(id, optional.get());
-            getFactorParent(parents, optional.get().getParentId());
+        return parentLayerOrder+layerOrder;
+    }
+
+    private String getFullKey(String parentId,String id){
+
+        if(StringUtils.isEmpty(parentId)){
+            return id;
         }
+
+        Optional<FactorDataGroupCfg> groupCfg = factorDataGroupCfgDao.findById(parentId);
+        String fullKey = groupCfg.map(FactorDataGroupCfg::getFullKey).orElse("");
+        return fullKey+"-"+id;
     }
 }

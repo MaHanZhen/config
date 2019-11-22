@@ -1,96 +1,99 @@
-
+var nowNode,cfgTable,dTree;
 $(function () {
-    initMeterTable();
     loadCfgTree();
 });
 
-function initMeterTable() {
-    layui.use('table', function(){
-        meterTable = layui.table;
-        meterTable.render({
-            id:'meterTable',
-            elem: '#meterTable',
-            url:BaseParam.rootPath+'/Meter400V/listMeter400V',
-            method:"post",
-            where:{},
-            limit:20,
-            page: {curr: 1},
-            cols: [[
-                {field:'modelName',   title: '名称'},
-                {field:'model', title: '类型'}
-            ]],
-            page:true,
-            done: function(res, curr, count){
-                if(count == 0){
-                    return;
-                }
-                $("div[lay-id='meterTable'] tr[data-index='0']").click();
+
+layui.use('table', function () {
+    var table = layui.table;
+    cfgTable = table.render({
+        id: 'cfgTable',
+        elem: '#cfgTable',
+        url: BaseParam.rootPath + '/FactorDataGroupCfg/cfgPoint',
+        method: "post",
+        where: {},
+        limit: 20,
+        page: {curr: 1},
+        cols: [[
+            {field: 'name', title: '名称'},
+            {field: 'uiControl', title: '控件'},
+            {field: 'channelName', title: '信道名称'},
+            {field: 'channelAddress', title: '信道地址'},
+            {field: 'channelRate', title: '监测频率'},
+            {field: 'handlerIdentify', title: '自定义监测方法'},
+            {field: 'handlerFields', title: '自定义监测地址'},
+            {field: 'handlerFieldRates', title: '自定义监测频率'},
+        ]],
+        page: true,
+    });
+});
+
+function loadCfgTree() {
+    layui.extend({
+        dtree: BaseParam.rootPath + '/js/module/layui_ext/dtree/dtree'   // {/}的意思即代表采用自有路径，即不跟随 base 路径
+    }).use(['dtree', 'layer', 'jquery'], function () {
+        dTree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        // 初始化树
+        var cfgTree = dTree.render({
+            elem: "#cfgTree",
+            url: BaseParam.rootPath + "/FactorDataGroupCfg/cfgTree",
+            dataFormat: "list",
+            menubar:true,
+            initLevel: "1",
+            menubarTips:{
+                freedom:[{menubarId:"add",handler:function(node){
+                        addTreeNode(node);
+                    }},
+                    {menubarId:"change",handler:function(node){
+                        changeTreeNode(node);
+                        }},
+                    {menubarId:"delete",handler:function(node){
+                        deleteTreeNode(node);
+                        }}
+                ],
+                group:[] // 按钮组制空
             }
         });
 
-        //监听行单击事件（单击事件为：rowDouble）
-        meterTable.on('row(meterTable)', function(obj){
-            //标注选中样式
-            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-            loadCollTable(obj.data.id)
+        // 绑定节点点击
+        dTree.on("node('cfgTree')", function (obj) {
+            nowNode = obj.param;
+            reloadCfgTable();
         });
     });
 }
 
-function loadCfgTree() {
-    var data1 = [{
-        title: '江西'
-        ,id: 1
-        ,children: [{
-            title: '南昌'
-            ,id: 1000
-            ,children: [{
-                title: '青山湖区'
-                ,id: 10001
-            },{
-                title: '高新区'
-                ,id: 10002
-            }]
-        },{
-            title: '九江'
-            ,id: 1001
-        },{
-            title: '赣州'
-            ,id: 1002
-        }]
-    },{
-        title: '广西'
-        ,id: 2
-        ,children: [{
-            title: '南宁'
-            ,id: 2000
-        },{
-            title: '桂林'
-            ,id: 2001
-        }]
-    },{
-        title: '陕西'
-        ,id: 3
-        ,children: [{
-            title: '西安'
-            ,id: 3000
-        },{
-            title: '延安'
-            ,id: 3001
-        }]
-    }];
+function addTreeNode(node) {
+    console.log(node);
+    if(node.level>=3){
+        layer.msg("禁止在此节点下继续添加子节点");
+        return ;
+    }
 
-    //开启节点操作图标
-    layui.use('tree', function(){
-        var tree = layui.tree;
-
-        tree.render({
-            elem: '#cfgTree'
-            ,data: data1
-            ,edit: ['add', 'update', 'del'] //操作节点的图标
-            ,click: function(obj){
-                layer.msg(JSON.stringify(obj.data));
-            }
+    layer.prompt({title: '请输入节点名称'},function(value, index, elem){
+        var url = BaseParam.rootPath +"/FactorDataGroupCfg/addTreeNode";
+        var data = {
+            parentId:node.nodeId,
+            name:value
+        };
+        $.post(url,data, function(data){
+            layer.msg("添加成功");
+            dTree.reload("cfgTree",{});
+            layer.close(index);
         });
     });
+}
+function changeTreeNode(node) {
+
+}
+function deleteTreeNode(node) {
+
+}
+
+function reloadCfgTable() {
+    cfgTable.reload({where: { //设定异步数据接口的额外参数，任意设
+            parentId: nowNode.nodeId,
+        }
+    })
 }
