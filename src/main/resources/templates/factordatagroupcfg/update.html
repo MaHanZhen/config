@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/module/layui2.5.4/css/layui.css}">
+    <script type="text/javascript" th:src="@{/js/module/layui2.5.4/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/js/jquery-1.12.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/module/public.js}"></script>
+    <style>
+        body{
+            padding: 15px;
+        }
+        table{
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px;
+        }
+        table th{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<input type="hidden" id="rootPath" th:href="@{/}">
+<form class="layui-form">
+    <table colls>
+        <tr>
+            <th>
+                名称
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+
+            <th>
+                控件
+            </th>
+            <td>
+                <select name="uiControl" >
+                    <option value="checkBox">输入框</option>
+                    <option value="select">选择框</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th colspan="4">
+                选择信道
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                <select name="meter400V">
+                    <option value="checkBox">所有</option>
+                    <option value="select">型号1</option>
+                    <option value="select">型号2</option>
+                </select>
+            </td>
+
+            <td colspan="3">
+                <select  name="channelId">
+                    <option value="">无</option>
+                    <option value="checkBox">因子1</option>
+                    <option value="select">因子2</option>
+                    <option value="select">因子3</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                信道名称
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+
+            <th>
+                信道地址
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                信道频率
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                自定义方法名称
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+
+            <th>
+                自定义方法字段
+            </th>
+            <td>
+                <select name="uiControl" >
+                    <option value="checkBox">输入框</option>
+                    <option value="select">选择框</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                自定义方法频率
+            </th>
+            <td>
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </td>
+
+
+        </tr>
+    </table>
+
+</form>
+<script type="text/javascript" th:src="@{/js/meter400v/update.js}"></script>
+</body>
+</html>

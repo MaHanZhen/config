@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -61,6 +62,19 @@ public class FactorDataGroupCfgService implements IFactorDataGroupCfgService {
         factorDataGroupCfg.setFactorId(null);
 
         return factorDataGroupCfgDao.save(factorDataGroupCfg);
+    }
+
+    @Transactional
+    @Override
+    public void updateTreeNode(String id, String name) {
+        this.factorDataGroupCfgDao.updateTreeNode(id,name);
+    }
+
+    @Transactional
+    @Override
+    public void deleteTreeNode(String id) {
+        Optional<FactorDataGroupCfg> factorDataGroupCfg = this.factorDataGroupCfgDao.findById(id);
+        factorDataGroupCfg.ifPresent(obj->factorDataGroupCfgDao.deleteTreeNode(obj.getLayerOrder()+"%"));
     }
 
 

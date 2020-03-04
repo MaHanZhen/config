@@ -36,22 +36,24 @@
                 <div class="layui-card">
                     <div class="layui-card-header">历史数据节点</div>
                     <div class="layui-card-body">
-                        <table id="cfgTable" class="layui-hide" lay-filter="collTable"></table>
-                    </div>
-                </div>
-
-                <div class="layui-card">
-                    <div class="layui-card-header">节点详情</div>
-                    <div class="layui-card-body">
-                        <form></form>
+                        <table id="pointTable" class="layui-hide" lay-filter="pointTable"></table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
 
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="bar">
+        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="change">修改</a>
+    </script>
 
     <script type="text/javascript" th:src="@{/js/factordatagroupcfg/index.js}"></script>
 </div>

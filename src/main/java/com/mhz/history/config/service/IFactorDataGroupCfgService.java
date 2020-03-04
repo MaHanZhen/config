@@ -15,4 +15,8 @@ public interface IFactorDataGroupCfgService {
     Page<FactorDataGroupCfgVO> findCfgPoint(String parentId, Pageable pageRequest);
 
     FactorDataGroupCfg addTreeNode(String parentId, String name);
+
+    void updateTreeNode(String id, String name);
+
+    void deleteTreeNode(String id);
 }

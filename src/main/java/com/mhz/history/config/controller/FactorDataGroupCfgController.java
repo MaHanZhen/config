@@ -49,10 +49,31 @@ public class FactorDataGroupCfgController  extends BaseController {
         return factorDataGroupCfg;
     }
 
+
+    @RequestMapping("/updateTreeNode")
+    @ResponseBody
+    public Object updateTreeNode(String id, String name){
+       this.factorDataGroupCfgService.updateTreeNode(id,name);
+       return "";
+    }
+
+    @RequestMapping("/deleteTreeNode")
+    @ResponseBody
+    public Object deleteTreeNode(String id){
+        this.factorDataGroupCfgService.deleteTreeNode(id);
+        return "";
+    }
+
+
     @RequestMapping("/cfgPoint")
     @ResponseBody
     public Object cfgPoint(String parentId){
         Page<FactorDataGroupCfgVO> data = this.factorDataGroupCfgService.findCfgPoint(parentId,getPageRequest());
         return LayUiUtil.transformLayUiTableData(data);
+    }
+
+    @RequestMapping("/toNew")
+    public String toNew(){
+        return "factordatagroupcfg/update";
     }
 }
