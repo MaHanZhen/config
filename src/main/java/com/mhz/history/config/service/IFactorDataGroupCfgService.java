@@ -19,4 +19,6 @@ public interface IFactorDataGroupCfgService {
     void updateTreeNode(String id, String name);
 
     void deleteTreeNode(String id);
+
+    void saveCfgPoint(FactorDataGroupCfg factorDataGroupCfg) throws Exception;
 }

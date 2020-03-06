@@ -1,6 +1,7 @@
 package com.mhz.history.config.controller;
 
 import com.mhz.history.config.domin.FactorDataGroupCfg;
+import com.mhz.history.config.msg.Message;
 import com.mhz.history.config.service.IFactorDataGroupCfgService;
 import com.mhz.history.config.util.LayUiUtil;
 import com.mhz.history.config.vo.FactorDataGroupCfgVO;
@@ -88,17 +89,22 @@ public class FactorDataGroupCfgController  extends BaseController {
     }
 
 
-    @RequestMapping("/saveItem")
+    @RequestMapping("/saveCfgPoint")
     @ResponseBody
-    public Object saveItem(FactorDataGroupCfg baseItem){
-
-        return baseItem;
+    public Object saveCfgPoint(FactorDataGroupCfg factorDataGroupCfg){
+        try {
+            this.factorDataGroupCfgService.saveCfgPoint(factorDataGroupCfg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Message.error(e.getMessage());
+        }
+        return Message.success();
     }
 
 
-    @RequestMapping("/updateItem")
+    @RequestMapping("/updateCfgPoint")
     @ResponseBody
-    public Object updateItem(FactorDataGroupCfg baseItem){
+    public Object updateCfgPoint(FactorDataGroupCfg baseItem){
         return baseItem;
     }
 

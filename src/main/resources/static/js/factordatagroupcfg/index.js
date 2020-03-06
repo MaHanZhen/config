@@ -46,11 +46,22 @@ layui.use('table', function () {
     table.on('tool(pointTable)', function(obj){
         var data = obj.data;
         if(obj.event === 'change'){
-            layer.msg('ID：'+ data.id + ' 的查看操作');
+            // layer.msg('ID：'+ data.id + ' 的查看操作');
+            editConfigPoint(data.id);
         }
     });
 });
 
+function editConfigPoint(id) {
+    layer.open({
+        type: 2,
+        title: '添加节点',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['750px', '500px'],
+        content: BaseParam.rootPath + '/FactorDataGroupCfg/toEdit/'+id //iframe的url
+    });
+}
 
 function addConfigPoint() {
     if(null == nowNode.nodeId  ){

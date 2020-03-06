@@ -1,10 +1,4 @@
 var id = $("#id").val();
-$(function () {
-    if("" == id ){
-        $("#uiControl").attr("readonly","readonly");
-        layui.form.render();
-    }
-});
 layui.use(['form','laytpl'],function () {
     var form = layui.form;
 
@@ -19,14 +13,39 @@ layui.use(['form','laytpl'],function () {
 
 
     form.on('submit(submit)', function(data){
-        console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
-        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        console.log(data.field);
+        submitData(data.field);
+        return false;
     });
 
-    loadTransformFormula(null);
+
+    if("" != id ){
+        $("#uiControl").attr("disabled","disabled");
+    }
+
     loadMeter400V();
+    loadTransformFormula(null);
 
 });
+
+function submitData(field) {
+    var url = BaseParam.rootPath +"/FactorDataGroupCfg/saveCfgPoint";
+    if("" != id){
+        url = BaseParam.rootPath +"/FactorDataGroupCfg/updateCfgPoint"
+    }
+    $.post(url,field,function (result) {
+        if(BaseParam.error == result.code){
+            layer.msg(result.content);
+            return;
+        }
+
+        parent.layer.msg("执行成功");
+        parent.reloadPointTable();
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    })
+}
 
 function setChannelInfo(channelId) {
 

@@ -23,4 +23,7 @@ public interface IFactorDataGroupCfgDao extends JpaRepositoryImplementation<Fact
     @Modifying
     @Query(" update FactorDataGroupCfg t set t.enabled = false where  t.layerOrder like :layerOrder ")
     void deleteTreeNode(String layerOrder);
+
+    @Query("select t from FactorDataGroupCfg t where t.enabled = true and t.crossParentId = :crossParentId and t.name = :name  ")
+    List<FactorDataGroupCfg> getSubCrossCfgByName(String crossParentId, String name);
 }

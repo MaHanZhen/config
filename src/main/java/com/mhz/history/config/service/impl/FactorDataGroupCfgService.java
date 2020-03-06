@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.util.ListUtils;
 
 import javax.annotation.Resource;
 import javax.persistence.ManyToOne;
@@ -23,6 +24,10 @@ import java.util.*;
 
 @Service
 public class FactorDataGroupCfgService implements IFactorDataGroupCfgService {
+
+
+    private static final String CHECK_BOX = "checkbox";
+    private static final String SELECT = "select";
 
     @Resource
     ITransformFormulaNativeSqlDao transformFormulaNativeSqlDao;
@@ -51,6 +56,8 @@ public class FactorDataGroupCfgService implements IFactorDataGroupCfgService {
         FactorDataGroupCfg factorDataGroupCfg = new FactorDataGroupCfg();
         factorDataGroupCfg.setId(id);
         factorDataGroupCfg.setLayerOrder(layerOrder);
+        factorDataGroupCfg.setShowPrice("0");
+        factorDataGroupCfg.setOrderNo(0);
 
         factorDataGroupCfg.setKey(id);
         factorDataGroupCfg.setFullKey(getFullKey(parentId,id));
@@ -75,6 +82,55 @@ public class FactorDataGroupCfgService implements IFactorDataGroupCfgService {
     public void deleteTreeNode(String id) {
         Optional<FactorDataGroupCfg> factorDataGroupCfg = this.factorDataGroupCfgDao.findById(id);
         factorDataGroupCfg.ifPresent(obj->factorDataGroupCfgDao.deleteTreeNode(obj.getLayerOrder()+"%"));
+    }
+
+    @Override
+    public void saveCfgPoint(FactorDataGroupCfg factorDataGroupCfg) throws Exception {
+
+        String id = factorDataGroupCfNativeSqlDao.generateId();
+        String layerOrder= generateLayerOrder(factorDataGroupCfg.getParentId());
+
+        factorDataGroupCfg.setId(id);
+        factorDataGroupCfg.setLayerOrder(layerOrder);
+        factorDataGroupCfg.setEnabled(true);
+        factorDataGroupCfg.setDataName(factorDataGroupCfg.getName());
+        factorDataGroupCfg.setShowPrice("0");
+        factorDataGroupCfg.setOrderNo(0);
+
+        if(SELECT.equals(factorDataGroupCfg.getUiControl())){
+            factorDataGroupCfg = handleSelectType(factorDataGroupCfg);
+        }else{
+            factorDataGroupCfg.setKey(id);
+            factorDataGroupCfg.setFullKey(getFullKey(factorDataGroupCfg.getParentId(),id));
+        }
+
+        System.out.println(factorDataGroupCfg);
+        this.factorDataGroupCfgDao.save(factorDataGroupCfg);
+    }
+
+    private FactorDataGroupCfg handleSelectType(FactorDataGroupCfg factorDataGroupCfg) throws Exception{
+
+        FactorDataGroupCfg parent = this.factorDataGroupCfgDao.getOne(factorDataGroupCfg.getParentId());
+
+        if(parent ==null || StringUtils.isEmpty(parent.getParentId())){
+            throw new Exception("该分类不能选用选择框控件");
+        }
+
+        FactorDataGroupCfg crossParent = this.factorDataGroupCfgDao.getOne(parent.getParentId());
+        factorDataGroupCfg.setCrossParentId(crossParent.getId());
+
+        List<FactorDataGroupCfg> subCrossCfgList = this.factorDataGroupCfgDao.getSubCrossCfgByName(crossParent.getId(),factorDataGroupCfg.getName());
+
+        if(ListUtils.isEmpty(subCrossCfgList)){
+            factorDataGroupCfg.setKey(factorDataGroupCfg.getId());
+        }else{
+            factorDataGroupCfg.setKey(subCrossCfgList.get(0).getKey());
+        }
+
+        String fullKey = crossParent.getFullKey()+"-"+parent.getKey()+"-"+factorDataGroupCfg.getKey();
+        factorDataGroupCfg.setFullKey(fullKey);
+
+        return factorDataGroupCfg;
     }
 
 

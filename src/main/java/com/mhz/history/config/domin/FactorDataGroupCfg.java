@@ -286,4 +286,31 @@ public class FactorDataGroupCfg {
     public void setTargetField(String targetField) {
         this.targetField = targetField;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("FactorDataGroupCfg{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", key='").append(key).append('\'');
+        sb.append(", fullKey='").append(fullKey).append('\'');
+        sb.append(", factorId='").append(factorId).append('\'');
+        sb.append(", crossParentId='").append(crossParentId).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", parentId='").append(parentId).append('\'');
+        sb.append(", layerOrder='").append(layerOrder).append('\'');
+        sb.append(", uiControl='").append(uiControl).append('\'');
+        sb.append(", handlerIdentify='").append(handlerIdentify).append('\'');
+        sb.append(", handlerFields='").append(handlerFields).append('\'');
+        sb.append(", handlerFieldRates='").append(handlerFieldRates).append('\'');
+        sb.append(", unit='").append(unit).append('\'');
+        sb.append(", showPrice='").append(showPrice).append('\'');
+        sb.append(", orderNo=").append(orderNo);
+        sb.append(", enabled=").append(enabled);
+        sb.append(", dataName='").append(dataName).append('\'');
+        sb.append(", targetField='").append(targetField).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
