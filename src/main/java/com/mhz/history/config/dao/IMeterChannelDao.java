@@ -13,10 +13,10 @@ public interface IMeterChannelDao extends JpaRepositoryImplementation<MeterChann
 
     @Transactional
     @Modifying
-    @Query(" update MeterChannel t set t.enabled = false where  t.id=:id")
+    @Query(" update MeterChannel t set t.enabled = false where  t.channelId=:id")
     int disable(String id);
 
-    @Query(" FROM MeterChannel t where t.enabled = true and (t.name = :name or t.address = :address) ")
+    @Query(" FROM MeterChannel t where t.enabled = true and (t.channelName = :name or t.channelAddress = :address) ")
     List<MeterChannel> findCheckData(String name,String address);
 
 }

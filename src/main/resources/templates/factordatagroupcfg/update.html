@@ -19,25 +19,28 @@
         table th{
             width: 100px;
         }
+        div.layui-form-select > dl { max-height: 190px; }
     </style>
 </head>
 <body>
 <input type="hidden" id="rootPath" th:href="@{/}">
 <form class="layui-form">
+    <input type="hidden" id="parentId" name="parentId" th:value="${parentId}">
+    <input type="hidden" id="id" name="id" th:value="${id}">
     <table colls>
         <tr>
             <th>
                 名称
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required">
             </td>
 
             <th>
                 控件
             </th>
             <td>
-                <select name="uiControl" >
+                <select id="uiControl" name="uiControl" lay-verify="required" >
                     <option value="checkBox">输入框</option>
                     <option value="select">选择框</option>
                 </select>
@@ -51,20 +54,17 @@
         </tr>
 
         <tr>
-            <td>
-                <select name="meter400V">
-                    <option value="checkBox">所有</option>
+            <td  colspan="2">
+                <select name="meter400V" id="meter400V" lay-filter="meter400V" lay-search>
+                    <option value="checkBox">监测表型号</option>
                     <option value="select">型号1</option>
                     <option value="select">型号2</option>
                 </select>
             </td>
 
-            <td colspan="3">
-                <select  name="channelId">
-                    <option value="">无</option>
-                    <option value="checkBox">因子1</option>
-                    <option value="select">因子2</option>
-                    <option value="select">因子3</option>
+            <td colspan="2">
+                <select  name="factorId" id="channelId" lay-filter="channelId" lay-search lay-verify="required">
+
                 </select>
             </td>
         </tr>
@@ -74,23 +74,23 @@
                 信道名称
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" id="channelName" name="channelName" readonly  autocomplete="off" class="layui-input">
             </td>
 
             <th>
                 信道地址
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" id="channelAddress" name="channelAddress" readonly autocomplete="off" class="layui-input">
             </td>
         </tr>
 
         <tr>
             <th>
-                信道频率
+                信道频率(分钟)
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" id="rate" name="rate" readonly autocomplete="off" class="layui-input">
             </td>
         </tr>
 
@@ -99,33 +99,49 @@
                 自定义方法名称
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="handlerIdentify" placeholder="请输入" autocomplete="off" class="layui-input">
             </td>
 
             <th>
                 自定义方法字段
             </th>
             <td>
-                <select name="uiControl" >
-                    <option value="checkBox">输入框</option>
-                    <option value="select">选择框</option>
-                </select>
+                <input type="text" name="handlerFields" placeholder="以“,”隔开" autocomplete="off" class="layui-input">
             </td>
         </tr>
-
         <tr>
             <th>
                 自定义方法频率
             </th>
             <td>
-                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="handlerFieldRates" placeholder="请输入" autocomplete="off" class="layui-input">
             </td>
-
-
         </tr>
     </table>
 
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
 </form>
-<script type="text/javascript" th:src="@{/js/meter400v/update.js}"></script>
+
+
+
+<script type="text/html" id="channelIdTemp">
+    <option value="">请选择监测因子</option>
+    {{#  layui.each(d, function(index, item){ }}
+    <option value="{{ item.channelId }}">{{ item.channelName }}</option>
+    {{#  }); }}
+</script>
+
+<script type="text/html" id="meter400VTemp">
+    <option value="">监测表型号</option>
+    {{#  layui.each(d, function(index, item){ }}
+        <option value="{{ item.id }}">{{ item.model }}</option>
+    {{#  }); }}
+</script>
+<script type="text/javascript" th:src="@{/js/factordatagroupcfg/update.js}"></script>
 </body>
 </html>

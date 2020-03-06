@@ -17,19 +17,19 @@ public class MeterChannel implements Serializable {
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     @Column(name = "ID")
-    private String id;
+    private String channelId;
 
     /**
      * 名称
      */
     @Column(name = "NAME")
-    private String name;
+    private String channelName;
 
     /**
      * 地址
      */
     @Column(name = "ADDRESS")
-    private String address;
+    private String channelAddress;
 
     /**
      * 类型
@@ -120,28 +120,56 @@ public class MeterChannel implements Serializable {
     private Boolean canvirtualCount;
 
 
-    public String getId() {
-        return id;
+    public String getChannelId() {
+        return channelId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
-    public String getName() {
-        return name;
+    public String getChannelName() {
+        return channelName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getChannelAddress() {
+        return channelAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setChannelAddress(String channelAddress) {
+        this.channelAddress = channelAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "MeterChannel{" +
+                "channelId='" + channelId + '\'' +
+                ", channelName='" + channelName + '\'' +
+                ", channelAddress='" + channelAddress + '\'' +
+                ", type='" + type + '\'' +
+                ", dataLenght=" + dataLenght +
+                ", dataType='" + dataType + '\'' +
+                ", rate=" + rate +
+                ", method='" + method + '\'' +
+                ", acc='" + acc + '\'' +
+                ", unit='" + unit + '\'' +
+                ", valueType='" + valueType + '\'' +
+                ", valueRange='" + valueRange + '\'' +
+                ", hilo='" + hilo + '\'' +
+                ", enabled=" + enabled +
+                ", recorder='" + recorder + '\'' +
+                ", recordDate=" + recordDate +
+                ", modifier='" + modifier + '\'' +
+                ", modifyDate=" + modifyDate +
+                ", disabler='" + disabler + '\'' +
+                ", disableDate=" + disableDate +
+                ", attr='" + attr + '\'' +
+                ", canvirtualCount=" + canvirtualCount +
+                '}';
     }
 
     public String getType() {
@@ -296,31 +324,5 @@ public class MeterChannel implements Serializable {
         this.canvirtualCount = canvirtualCount;
     }
 
-    @Override
-    public String toString() {
-        return "MeterChannel{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", type='" + type + '\'' +
-                ", dataLenght=" + dataLenght +
-                ", dataType='" + dataType + '\'' +
-                ", rate=" + rate +
-                ", method='" + method + '\'' +
-                ", acc='" + acc + '\'' +
-                ", unit='" + unit + '\'' +
-                ", valueType='" + valueType + '\'' +
-                ", valueRange='" + valueRange + '\'' +
-                ", hilo='" + hilo + '\'' +
-                ", enabled=" + enabled +
-                ", recorder='" + recorder + '\'' +
-                ", recordDate=" + recordDate +
-                ", modifier='" + modifier + '\'' +
-                ", modifyDate=" + modifyDate +
-                ", disabler='" + disabler + '\'' +
-                ", disableDate=" + disableDate +
-                ", attr='" + attr + '\'' +
-                ", canvirtualCount=" + canvirtualCount +
-                '}';
-    }
+
 }

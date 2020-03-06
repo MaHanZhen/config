@@ -1,4 +1,4 @@
-var nowNode,pointTable,dTree;
+var nowNode = {},pointTable,dTree;
 $(function () {
     loadCfgTree();
 });
@@ -53,13 +53,17 @@ layui.use('table', function () {
 
 
 function addConfigPoint() {
+    if(null == nowNode.nodeId  ){
+        layer.msg("请选择上级节点");
+        return;
+    }
     layer.open({
         type: 2,
         title: '添加节点',
         shadeClose: true,
         shade: 0.8,
         area: ['750px', '500px'],
-        content: BaseParam.rootPath + '/FactorDataGroupCfg/toNew' //iframe的url
+        content: BaseParam.rootPath + '/FactorDataGroupCfg/toNew/'+nowNode.nodeId //iframe的url
     });
 }
 

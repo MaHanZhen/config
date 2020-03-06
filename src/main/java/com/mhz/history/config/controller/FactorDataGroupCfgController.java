@@ -7,8 +7,10 @@ import com.mhz.history.config.vo.FactorDataGroupCfgVO;
 import com.mhz.history.config.vo.LayUiDTreeNode;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,8 +74,32 @@ public class FactorDataGroupCfgController  extends BaseController {
         return LayUiUtil.transformLayUiTableData(data);
     }
 
-    @RequestMapping("/toNew")
-    public String toNew(){
+    @RequestMapping("/toNew/{parentId}")
+    public String toNew(@PathVariable String parentId, Model model){
+        model.addAttribute("parentId",parentId);
         return "factordatagroupcfg/update";
     }
+
+
+    @RequestMapping("/toEdit/{id}")
+    public String toEdit(@PathVariable String id, Model model){
+        model.addAttribute("id",id);
+        return "factordatagroupcfg/update";
+    }
+
+
+    @RequestMapping("/saveItem")
+    @ResponseBody
+    public Object saveItem(FactorDataGroupCfg baseItem){
+
+        return baseItem;
+    }
+
+
+    @RequestMapping("/updateItem")
+    @ResponseBody
+    public Object updateItem(FactorDataGroupCfg baseItem){
+        return baseItem;
+    }
+
 }

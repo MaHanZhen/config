@@ -49,7 +49,7 @@ public class MeterChannelService implements IMeterChannelService {
 
     @Override
     public List<MeterChannel> checkSaveData(MeterChannel param) {
-        return  meterChannelDao.findCheckData(param.getName(),param.getAddress());
+        return  meterChannelDao.findCheckData(param.getChannelName(),param.getChannelAddress());
     }
 
 

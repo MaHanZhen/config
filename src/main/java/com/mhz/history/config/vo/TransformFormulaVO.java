@@ -15,6 +15,15 @@ public class TransformFormulaVO extends TransformFormula {
 
     private String rate;
 
+    private String channelId;
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
 
     public String getRate() {
         return rate;

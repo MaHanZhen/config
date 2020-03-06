@@ -21,6 +21,7 @@ public class TransformFormulaNativeSqlDao extends BaseNativeSqlDao implements IT
         sql.append(" SELECT  ");
         sql.append(" 	coll.*, ");
         sql.append(" 	dtu.MODEL dtu_name, ");
+        sql.append(" 	ch.id channel_id, ");
         sql.append(" 	ch.ADDRESS channel_address, ");
         sql.append(" 	ch.rate, ");
         sql.append(" 	ch.`NAME` channel_name ");
